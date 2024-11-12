@@ -1,3 +1,4 @@
 - Création du projet avec Vue-CLI (Vue3)
 - Installation de vuex 
 - Création du composant AuthButton et intégration
+- Création du store vuex et import dans fichier main.js

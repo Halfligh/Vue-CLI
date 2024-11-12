@@ -1,24 +1,38 @@
 <template>
-    <div class="login-container">
-      <div class="input-label-container">
-        <label for="username">Identifiant:</label>
-        <input id="username" type="text" v-model="username" required />
-      </div>
-      <div class="input-label-container">
-        <label for="password">Mot de passe:</label>
-        <input id="password" type="password" v-model="password" required />
-      </div>
-      <button class="common-button" @click="toggleAuth">
-      {{ isAuthenticated ? 'Déconnexion' : 'Connexion' }}
-      </button>
+  <div class="auth-container">
+    <LoginForm v-if="!isLoggedIn" @submit="login" />
+    <div v-if="isLoggedIn">
+      <h2>Bienvenu {{username}} vous êtes connecté</h2>
+      <button class="common-button" @click="logout">Se déconnecter</button>
+    </div>
   </div>
-  </template>
-  
-  <script>
-  </script>
+</template>
+
+<script>
+import LoginForm from '../forms/LoginForm.vue';
+import { mapState, mapActions } from 'vuex';
+
+export default {
+  components: {
+    LoginForm
+  },
+  computed: {
+    ...mapState({
+      isLoggedIn: 'isLoggedIn',
+      username: 'username'
+    })
+  },
+  methods: {
+    ...mapActions({
+      login: 'login',
+      logout: 'logout'
+    })
+  }
+};
+</script>
 
 <style scoped>
-.login-container {
+.auth-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,25 +45,6 @@
   background-color: #f9f9f9;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-.input-label-container {
-  width: 100%;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-}
-
-input {
-  width: 200px;
-  height: 30px;
-  border: 0.5px solid rgba(78, 78, 78, 0.466);
-  border-radius: 3px;
-  padding-left: 8px;
 }
 
 .common-button {
